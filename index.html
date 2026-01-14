@@ -102,35 +102,37 @@
         .whatsapp-float:hover { transform: scale(1.1); color: white; }
 
 
-.btn-glass-primary {
-    background: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
-    backdrop-filter: blur(10px); /* Efecto borroso detrás */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #0d6efd; /* Color azul de tu marca */
-    padding: 12px 35px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+/* Botón Principal (Ver Servicios) */
+.btn-custom-primary {
+    background: linear-gradient(90deg, #0066cc 0%, #0099ff 100%); /* Degradado azul */
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 12px 40px; /* Más espacio interno */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4); /* Resplandor azul */
 }
 
-.btn-glass-primary:hover {
-    background: #0d6efd;
+.btn-custom-primary:hover {
+    transform: translateY(-2px); /* Se eleva un poco */
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.6); /* Más resplandor */
     color: white;
-    box-shadow: 0 0 15px #0d6efd;
 }
 
-.btn-glass-secondary {
+/* Botón Secundario (Contactar) */
+.btn-custom-outline {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     color: white;
-    text-decoration: none;
-    padding: 12px 25px;
     font-weight: 500;
-    transition: 0.3s;
+    padding: 12px 40px;
+    transition: all 0.3s ease;
 }
 
-.btn-glass-secondary:hover {
-    color: #ccc;
-    transform: translateX(5px); /* Se mueve a la derecha */
+.btn-custom-outline:hover {
+    border-color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 
