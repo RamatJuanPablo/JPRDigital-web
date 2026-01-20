@@ -3,200 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JPR Digital | Futuro Estructural</title>
+    <title>JPR Digital | Premium Future</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* =========================================
-           PALETA DE COLORES (Grises y Neón Gris)
-           ========================================= */
         :root {
-            --bg-main: #e6e6e6;      /* Fondo gris claro */
-            --grid-line: #ffffff;    /* Líneas de cuadrícula blancas */
-            --text-dark: #222222;    /* Texto principal oscuro */
-            --text-grey: #666666;    /* Texto secundario gris */
+            --bg-silver: #f0f2f5;       /* Fondo plata claro */
+            --grid-metallic: #b0b8c0;   /* Líneas de cuadrícula metálicas */
             
-            /* Colores para los Bloques 3D */
-            --block-bg: #111111;     /* Fondo gris muy oscuro casi negro */
-            --block-text: #ffffff;   /* Texto blanco dentro de bloques */
-            --neon-edge: #f2f2f2;    /* El "Gris Neón" brillante para el borde 3D */
+            /* NUEVA PALETA PREMIUM */
+            --block-titanium: #2a2a2a;  /* Gris oscuro opaco "Titanio" (No negro) */
+            --neon-core: #ffffff;       /* Núcleo de luz blanca */
+            --neon-glow: #c0c0c0;       /* Resplandor gris platino brillante */
+            
+            --text-dark: #1a1a1a;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-main);
+            background-color: var(--bg-silver);
             color: var(--text-dark);
+            margin: 0;
             overflow-x: hidden;
-            position: relative;
-            /* Creación del fondo de cuadrícula con perspectiva */
-            background-image: 
-                linear-gradient(to bottom, rgba(230,230,230,0.5) 0%, var(--bg-main) 90%), /* Degradado para suavizar el horizonte */
-                perspective(1000px) rotateX(60deg) linear-gradient(0deg, var(--grid-line) 2px, transparent 2px), /* Líneas horizontales 3D */
-                perspective(1000px) rotateX(60deg) linear-gradient(90deg, var(--grid-line) 2px, transparent 2px); /* Líneas verticales 3D */
-            background-size: 100% 100%, 100% 100px, 100px 100%;
-            background-position: center top;
-            background-repeat: no-repeat, repeat, repeat;
-            min-height: 100vh;
         }
 
-        /* Tipografía fuerte */
-        h1, h2, h3, h5, .navbar-brand { font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .text-secondary-custom { color: var(--text-grey) !important; font-weight: 400; }
+        /* H1-H6 con fuente técnica */
+        h1, h2, h3, h4, h5, .navbar-brand, .btn {
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-        section { padding: 100px 0; }
+        /* EFECTO DE TEXTO DIGITAL */
+        h1.display-2, h2.display-4 {
+            font-weight: 700;
+            /* Sombra sutil para efecto de pantalla HD */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2), -1px -1px 0px rgba(255,255,255,0.5);
+        }
 
         /* =========================================
-           ESTILO DE BLOQUE 3D "GRIS NEÓN"
-           (Imitando los botones/tarjetas de image_11.png)
+           1. FONDO WIREFRAME 3D METÁLICO
            ========================================= */
-        .neon-block {
-            background-color: var(--block-bg);
-            color: var(--block-text) !important;
-            border-radius: 20px;
-            /* El truco para el borde 3D multicapa usando box-shadow */
+        .room-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+            overflow: hidden; perspective: 800px; background: var(--bg-silver);
+        }
+        .grid-plane {
+            position: absolute; width: 250vw; height: 250vh; left: -75vw;
+            background-image: linear-gradient(var(--grid-metallic) 1px, transparent 1px), linear-gradient(90deg, var(--grid-metallic) 1px, transparent 1px);
+            background-size: 60px 60px; opacity: 0.4;
+        }
+        .floor {
+            bottom: 0; transform: rotateX(75deg) translateY(10%) translateZ(0); transform-origin: bottom center;
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 20%, transparent 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 20%, transparent 100%);
+        }
+        .ceiling {
+            top: 0; transform: rotateX(-75deg) translateY(-10%) translateZ(0); transform-origin: top center;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 20%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 20%, transparent 100%);
+        }
+        .wall {
+            top: 30%; left: 0; width: 100%; height: 40%; transform: scale(1.2) translateZ(-200px);
+            background-image: linear-gradient(var(--grid-metallic) 1px, transparent 1px), linear-gradient(90deg, var(--grid-metallic) 1px, transparent 1px);
+            background-size: 60px 60px; opacity: 0.2;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        /* =========================================
+           2. ANIMACIÓN SCROLL FADE (Optimizada)
+           ========================================= */
+        .scroll-block {
+            opacity: 0; filter: blur(20px); transform: scale(0.92) translateY(60px);
+            transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .scroll-block.in-view { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
+        section { min-height: 95vh; display: flex; align-items: center; padding: 80px 0; }
+
+        /* =========================================
+           3. NUEVOS BLOQUES PREMIUM "TITANIO & LUZ"
+           ========================================= */
+        .d-3d-block, .service-card {
+            background: var(--block-titanium); /* Gris opaco profundo */
+            color: var(--neon-core);
+            border-radius: 16px;
+            position: relative;
+            /* EL EFECTO DE LUZ NEÓN GRIS BRILLANTE MULTICAPA */
             box-shadow: 
-                0 0 0 3px var(--block-bg),      /* Pequeño espacio oscuro */
-                0 0 0 6px var(--neon-edge),     /* Borde exterior brillante grueso */
-                8px 8px 20px rgba(0,0,0,0.4);   /* Sombra suave para levantar el objeto */
-            transition: all 0.3s ease;
-            border: none; /* Quitamos bordes estándar */
+                0 0 0 3px var(--block-titanium), /* Separador */
+                0 0 0 5px var(--neon-core),      /* Núcleo blanco puro */
+                0 0 25px 2px var(--neon-glow),   /* Halo gris brillante exterior */
+                0 25px 50px rgba(0,0,0,0.4);     /* Sombra de profundidad profunda */
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border: none;
         }
 
-        .neon-block:hover {
-            transform: translateY(-5px);
-            /* Al hacer hover, intensificamos el brillo del borde "neón" */
+        /* Efecto Hover: Intensifica la luz */
+        .d-3d-block:hover, .service-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            background: #363636; /* Se aclara ligeramente al interactuar */
             box-shadow: 
-                0 0 0 3px var(--block-bg),
-                0 0 0 6px var(--neon-edge),
-                0 0 30px var(--neon-edge); /* Resplandor gris/blanco */
+                0 0 0 3px var(--block-titanium),
+                0 0 0 6px var(--neon-core),
+                0 0 40px 10px var(--neon-glow),  /* Resplandor mucho más intenso */
+                0 40px 80px rgba(0,0,0,0.5);
         }
 
-        /* Aplicación a Botones */
-        .btn-custom {
-            @extend .neon-block;
-            padding: 15px 40px;
-            font-weight: 600;
-            display: inline-block;
-            text-decoration: none;
+        /* Estilos específicos para Botones */
+        .d-3d-block {
+            padding: 1.2rem 2.5rem; display: inline-block; text-decoration: none; font-weight: 700;
         }
 
-        /* Aplicación a Tarjetas de Servicio */
+        /* Estilos específicos para Tarjetas */
         .service-card {
-            @extend .neon-block;
-            padding: 3rem;
-            height: 100%;
+            padding: 3.5rem; height: 100%; display: flex; flex-direction: column; justify-content: center;
         }
-        .icon-box { font-size: 3rem; color: var(--neon-edge); margin-bottom: 1.5rem; }
+        /* Los íconos ahora brillan con la luz neón */
+        .service-card i {
+            color: var(--neon-core);
+            filter: drop-shadow(0 0 10px var(--neon-glow));
+        }
+        .text-highlight { color: var(--neon-glow); }
 
-
-        /* Navbar limpia */
-        .navbar { background: transparent; }
-        .navbar-brand { color: var(--text-dark) !important; }
-        .nav-link { color: var(--text-dark) !important; font-weight: 600; }
-
-        /* Ajustes del Hero */
-        .hero { min-height: 85vh; display: flex; align-items: center; }
-        .hero h1 { font-size: 4rem; line-height: 1.1; }
-        #typing-text { color: var(--text-dark); }
+        /* Navbar Premium */
+        .navbar { background: rgba(240,242,245,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .navbar-brand i { color: #555; }
 
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top py-4">
+    <div class="room-container">
+        <div class="grid-plane ceiling"></div>
+        <div class="wall"></div>
+        <div class="grid-plane floor"></div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-square text-secondary me-2"></i>JPR Digital
+            <a class="navbar-brand text-dark fw-bold" href="#">
+                <i class="fas fa-cube me-2"></i>JPR Digital
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-4">
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold ls-1" href="#hero">INICIO</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold ls-1" href="#servicios">SERVICIOS</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold ls-1" href="#contacto">CONTACTO</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <header class="hero">
+    <header id="hero" class="scroll-block">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h5 class="text-secondary-custom mb-3">Ingeniería Digital</h5>
-                    <h1 class="mb-4">TU WEB PERSONAL.<br><span id="typing-text"></span><span class="cursor">_</span></h1>
-                    <p class="lead text-secondary-custom mb-5" style="max-width: 600px;">
-                        Ayudamos a profesionales a digitalizar su negocio con páginas web modernas y automatización estratégica.
-                    </p>
-                    <div class="d-flex gap-4 flex-wrap">
-                        <a href="#servicios" class="neon-block btn-custom">Ver Servicios</a>
-                        <a href="#contacto" class="neon-block btn-custom">Contactar</a>
-                    </div>
+            <div class="row align-items-center">
+                <div class="col-lg-9">
+                    <h5 class="text-uppercase ls-2 mb-4 text-secondary fw-bold">/// Ingeniería Digital Avanzada</h5>
+                    <h1 class="display-2 mb-5">TU WEB PERSONAL.<br><span id="typing-text" style="color: #333;"></span><span class="cursor" style="color: #333;">_</span></h1>
+                    
+                    <div class="d-flex gap-4 mt-5 flex-wrap">
+                        <a href="#servicios" class="d-3d-block">EXPLORAR SERVICIOS</a>
+                        <a href="#contacto" class="d-3d-block" style="background: #f0f2f5; color: #2a2a2a; border: 2px solid #2a2a2a; box-shadow: 5px 5px 0 #2a2a2a;">CONTACTAR</a> </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <section id="servicios">
+    <section id="servicios" class="scroll-block">
         <div class="container">
-            <h2 class="mb-5">Servicios</h2>
-            <div class="row g-5">
+            <div class="row mb-5 align-items-end">
+                <div class="col-md-6"><h2 class="display-4 m-0">SERVICIOS</h2></div>
+                <div class="col-md-6 text-md-end"><p class="lead text-secondary m-0">Soluciones de alto rendimiento.</p></div>
+            </div>
+            <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="service-card neon-block">
-                        <div class="icon-box"><i class="fas fa-laptop-code"></i></div>
-                        <h4>Landing Page</h4>
-                        <p class="text-secondary-custom text-white-50 small mt-3 mb-0">Sitios de alto impacto diseñados para convertir. Rápidos y adaptables.</p>
+                    <div class="service-card">
+                        <i class="fas fa-laptop-code fa-3x mb-4"></i>
+                        <h3>Landing Page</h3>
+                        <p class="text-highlight mt-3 mb-0">Sitios de alto impacto. Velocidad y conversión optimizadas.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service-card neon-block">
-                        <div class="icon-box"><i class="fas fa-server"></i></div>
-                        <h4>Dominio & Hosting</h4>
-                        <p class="text-secondary-custom text-white-50 small mt-3 mb-0">Infraestructura completa: registro, configuración de servidores y seguridad SSL.</p>
+                    <div class="service-card">
+                        <i class="fas fa-network-wired fa-3x mb-4"></i>
+                        <h3>Automatización</h3>
+                        <p class="text-highlight mt-3 mb-0">Conectamos tus sistemas. Flujos de trabajo inteligentes sin intervención.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service-card neon-block">
-                        <div class="icon-box"><i class="fas fa-paint-brush"></i></div>
-                        <h4>Diseño UI/UX</h4>
-                        <p class="text-secondary-custom text-white-50 small mt-3 mb-0">Estética moderna y funcional que refleja la seriedad de tu marca.</p>
+                    <div class="service-card">
+                        <i class="fas fa-layer-group fa-3x mb-4"></i>
+                        <h3>Diseño UI/UX</h3>
+                        <p class="text-highlight mt-3 mb-0">Interfaces futuristas y funcionales que definen tu marca.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contacto" class="pb-5">
+    <section id="contacto" class="scroll-block">
         <div class="container">
-            <h2 class="mb-5">Contact</h2>
+             <div class="row mb-5 align-items-end">
+                <div class="col-md-6"><h2 class="display-4 m-0">CONTACTO</h2></div>
+                <div class="col-md-6 text-md-end"><p class="lead text-secondary m-0">Inicia tu transformación digital.</p></div>
+            </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="neon-block p-5 text-center d-flex flex-column gap-4 align-items-center justify-content-center">
-                        <h3>¿Listo para empezar?</h3>
-                         <div class="d-flex gap-3 flex-wrap justify-content-center mt-2">
-                            <a href="#servicios" class="neon-block btn-custom py-2 px-4" style="font-size: 0.9rem">Ver Servicios</a>
-                            <a href="https://wa.me/5491127000116" class="neon-block btn-custom py-2 px-4" style="font-size: 0.9rem">Contactar</a>
+                <div class="col-lg-8 mx-auto">
+                    <div class="service-card p-5 text-center align-items-center">
+                        <h3 class="fw-bold mb-4 display-6">¿Listo para el siguiente nivel?</h3>
+                        <p class="text-highlight mb-5 lead">Hablemos sobre tu proyecto. Sin compromisos.</p>
+                        
+                        <div class="d-flex gap-4 justify-content-center flex-wrap mb-5">
+                            <a href="https://wa.me/5491127000116" class="d-3d-block py-3 px-5">
+                                <i class="fab fa-whatsapp me-2"></i> INICIAR CHAT
+                            </a>
                         </div>
-                        <div class="mt-4 p-2 bg-white rounded d-inline-block">
-                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://jprdigital.com.ar&color=000000&bgcolor=FFFFFF" alt="QR JPR" width="120" style="filter: grayscale(100%);">
+                         <div class="bg-white p-3 d-inline-block rounded-4" style="box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://jprdigital.com.ar" alt="QR" width="150" style="filter: grayscale(100%); opacity: 0.8;">
                         </div>
                     </div>
                 </div>
             </div>
-             <p class="text-secondary-custom mt-5 pt-5 mb-0">© 2026 JPR Digital. Todos los derechos reservados.</p>
         </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Máquina de escribir (Simple para el ejemplo)
+        // 1. MÁQUINA DE ESCRIBIR (Tipografía técnica)
         const textElement = document.getElementById('typing-text');
-        const phrases = ["AUTOMATIZACIÓN.", "DISEÑO ESTRATÉGICO."];
+        const phrases = ["AUTOMATIZACIÓN INTELIGENTE.", "DISEÑO ESTRATÉGICO.", "SISTEMAS A MEDIDA."];
         let phraseIndex = 0; let charIndex = 0; let isDeleting = false;
         function type() {
             const currentPhrase = phrases[phraseIndex];
             if (isDeleting) { textElement.textContent = currentPhrase.substring(0, charIndex - 1); charIndex--; } 
             else { textElement.textContent = currentPhrase.substring(0, charIndex + 1); charIndex++; }
-            if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; setTimeout(type, 2000); } 
+            if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; setTimeout(type, 2500); } 
             else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; setTimeout(type, 500); } 
-            else { setTimeout(type, isDeleting ? 50 : 150); }
+            else { setTimeout(type, isDeleting ? 40 : 100); }
         }
         document.addEventListener('DOMContentLoaded', type);
+
+        // 2. SCROLL FADE OPTIMIZADO
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                entry.target.classList.toggle('in-view', entry.isIntersecting);
+            });
+        }, { threshold: 0.25, rootMargin: "-50px" }); // Ajuste para que el efecto sea más notorio
+
+        document.querySelectorAll('.scroll-block').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
