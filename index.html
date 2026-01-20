@@ -32,96 +32,62 @@
         section { padding: 100px 0; }
 
         /* =========================================
-           2. FONDO PLASMA 3D (PURO CSS)
+           2. FONDO 3D (Vanta.js Container)
            ========================================= */
-        /* Contenedor fijo al fondo */
-        .background-shapes {
+        #vanta-bg {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            background: #050505; /* Fondo negro base */
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Detrás de todo */
         }
-
-        /* Estilo base para los orbes de luz */
-        .shape {
-            position: absolute;
-            filter: blur(120px); /* Desenfoque extremo para efecto 3D/Gas */
-            opacity: 0.6;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-            border-radius: 50%;
-        }
-
-        /* Orbe 1: Azul Principal (Arriba Izquierda) */
-        .shape-1 {
-            top: -10%; left: -10%;
-            width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(0,112,243,0.7) 0%, rgba(0,0,0,0) 70%);
-            animation: moveShape1 25s infinite alternate;
-        }
-
-        /* Orbe 2: Cian Neón (Abajo Derecha) */
-        .shape-2 {
-            bottom: -10%; right: -10%;
-            width: 60vw; height: 60vw;
-            background: radial-gradient(circle, rgba(0,212,255,0.5) 0%, rgba(0,0,0,0) 70%);
-            animation: moveShape2 30s infinite alternate;
-        }
-
-        /* Orbe 3: Acento Violeta (Centro Flotante) - Para profundidad */
-        .shape-3 {
-            top: 40%; left: 30%;
-            width: 40vw; height: 40vw;
-            background: radial-gradient(circle, rgba(120, 0, 255, 0.4) 0%, rgba(0,0,0,0) 70%);
-            animation: moveShape3 20s infinite alternate;
-        }
-
-        /* Animaciones lentas */
-        @keyframes moveShape1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(20%, 10%) scale(1.1); } }
-        @keyframes moveShape2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-20%, -10%) scale(0.9); } }
-        @keyframes moveShape3 { 0% { transform: translate(0, 0); } 100% { transform: translate(20%, -20%); } }
 
         /* =========================================
-           3. EFECTO CRISTAL (Glassmorphism)
+           3. ESTILOS DE TRANSPARENCIA (Para ver el fondo)
            ========================================= */
-        /* Aplicamos transparencia y blur a los contenedores para ver el fondo */
         
+        /* Navbar Transparente */
         .navbar {
-            background: rgba(5, 5, 5, 0.6); /* Más transparente */
-            backdrop-filter: blur(20px); /* Efecto vidrio esmerilado */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Fondos de sección semitransparentes */
-        .bg-glass {
-            background: rgba(10, 10, 10, 0.4);
-            backdrop-filter: blur(10px); /* Suaviza las formas de fondo detrás del texto */
+        /* Fondos de secciones semitransparentes */
+        .bg-glass-dark {
+            background: rgba(5, 5, 5, 0.75); /* Oscuro pero transparente */
+            backdrop-filter: blur(5px);
         }
         
+        .bg-glass-lighter {
+            background: rgba(20, 20, 20, 0.65);
+            backdrop-filter: blur(5px);
+        }
+
         /* Tarjetas estilo Cristal */
         .service-card, .card {
-            background: rgba(255, 255, 255, 0.03) !important; /* Muy sutil */
-            backdrop-filter: blur(20px); /* Fuerte blur para legibilidad */
+            background: rgba(0, 0, 0, 0.5) !important;
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 2.5rem;
             transition: 0.4s ease;
             height: 100%;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
         .service-card:hover, .card:hover {
             transform: translateY(-10px);
             border-color: var(--neon-cyan) !important;
-            background: rgba(255, 255, 255, 0.07) !important;
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 112, 243, 0.3);
+            background: rgba(0, 0, 0, 0.7) !important;
         }
 
         /* =========================================
-           4. LOGO NEÓN Y BOTONES LÍQUIDOS
+           4. LOGO NEÓN Y BOTONES LÍQUIDOS (El CSS Común)
            ========================================= */
+        
+        /* Logo Neón */
         .navbar-brand { font-weight: 800; letter-spacing: 1px; }
         .navbar-brand i, .navbar-brand {
             color: #ffffff !important;
@@ -158,8 +124,8 @@
         }
 
         .btn-custom-outline {
-            border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.1);
-            color: white; font-weight: 500; padding: 12px 40px; background: rgba(255,255,255,0.01); backdrop-filter: blur(5px);
+            border-radius: 50px; border: 2px solid rgba(0, 212, 255, 0.5);
+            color: white; font-weight: 500; padding: 12px 40px; background: rgba(0,0,0,0.3);
             transition: all 0.3s ease;
         }
         .btn-custom-outline:hover {
@@ -167,9 +133,9 @@
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
-        /* Hero Text & Utilities */
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .hero h1 { font-size: 3.5rem; font-weight: 700; color: white; text-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        /* Utilidades Extra */
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.8); }
         .cursor { display: inline-block; width: 3px; background-color: var(--neon-cyan); animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
         
@@ -185,24 +151,11 @@
         }
         .whatsapp-float:hover { transform: scale(1.1); color: white; }
 
-        /* Píldoras de proceso */
-        .process-step {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            backdrop-filter: blur(5px);
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="background-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
+    <div id="vanta-bg"></div>
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-3">
         <div class="container">
@@ -225,9 +178,9 @@
 
     <header class="hero">
         <div class="container">
-            <span class="badge border border-primary text-primary px-3 py-2 rounded-pill mb-3" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(5px);">Diseño Web & Automatización</span>
+            <span class="badge border border-primary text-primary px-3 py-2 rounded-pill mb-3" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">Diseño Web & Automatización</span>
             <h1 class="mb-3"><span id="typing-text"></span><span class="cursor">&nbsp;</span></h1>
-            <p class="lead text-secondary mb-5 mx-auto" style="max-width: 600px; color: #ccc !important;">
+            <p class="lead text-secondary mb-5 mx-auto" style="max-width: 600px; color: #ddd !important; text-shadow: 1px 1px 2px black;">
                 Ayudamos a profesionales a digitalizar su negocio con páginas web modernas, bots inteligentes y aplicaciones a medida.
             </p>
             <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center px-4">
@@ -237,7 +190,7 @@
         </div>
     </header>
 
-    <section id="servicios" class="bg-glass">
+    <section id="servicios" class="bg-glass-dark">
         <div class="container">
             <div class="text-center mb-5">
                 <h6 class="text-primary text-uppercase ls-2">Identidad Digital</h6>
@@ -269,7 +222,7 @@
         </div>
     </section>
 
-    <section id="proceso">
+    <section id="proceso" class="bg-glass-lighter">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5 mb-5 mb-lg-0">
@@ -280,17 +233,17 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="row g-4">
-                        <div class="col-md-6"><div class="process-step"><span class="h1 text-primary fw-bold">01</span><h5 class="text-white mt-2">Briefing</h5><p class="text-secondary small m-0">Reunión breve para definir objetivos.</p></div></div>
-                        <div class="col-md-6"><div class="process-step"><span class="h1 text-primary fw-bold">02</span><h5 class="text-white mt-2">Desarrollo</h5><p class="text-secondary small m-0">Construcción técnica y diseño.</p></div></div>
-                        <div class="col-md-6"><div class="process-step"><span class="h1 text-primary fw-bold">03</span><h5 class="text-white mt-2">Revisión</h5><p class="text-secondary small m-0">Ajustes finales según feedback.</p></div></div>
-                        <div class="col-md-6"><div class="process-step" style="border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0,212,255,0.1);"> <span class="h1 text-primary fw-bold">04</span><h5 class="text-white mt-2">Lanzamiento</h5><p class="text-secondary small m-0">Tu web online.</p></div></div>
+                        <div class="col-md-6"><div class="service-card p-4"><span class="h1 text-primary fw-bold">01</span><h5 class="text-white mt-2">Briefing</h5><p class="text-secondary small m-0">Reunión breve para definir objetivos.</p></div></div>
+                        <div class="col-md-6"><div class="service-card p-4"><span class="h1 text-primary fw-bold">02</span><h5 class="text-white mt-2">Desarrollo</h5><p class="text-secondary small m-0">Construcción técnica y diseño.</p></div></div>
+                        <div class="col-md-6"><div class="service-card p-4"><span class="h1 text-primary fw-bold">03</span><h5 class="text-white mt-2">Revisión</h5><p class="text-secondary small m-0">Ajustes finales según feedback.</p></div></div>
+                        <div class="col-md-6"><div class="service-card p-4" style="border-color: var(--neon-cyan) !important;"> <span class="h1 text-primary fw-bold">04</span><h5 class="text-white mt-2">Lanzamiento</h5><p class="text-secondary small m-0">Tu web online.</p></div></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="premium" class="bg-glass">
+    <section id="premium" class="bg-glass-dark">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="badge bg-primary px-3 py-2 mb-3">SERVICIOS AVANZADOS</span>
@@ -299,7 +252,7 @@
             </div>
             <div class="row g-4">
                 <div class="col-md-6">
-                    <div class="card p-5 h-100">
+                    <div class="service-card p-5 h-100">
                         <div class="d-flex align-items-center mb-4">
                             <div class="bg-primary p-3 rounded-circle me-3 bg-opacity-25"><i class="fab fa-whatsapp text-primary fa-2x"></i></div>
                             <div><h3 class="mb-0 fw-bold text-white">Secretaria Virtual IA</h3><small class="text-success">Disponible 24/7</small></div>
@@ -308,7 +261,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card p-5 h-100">
+                    <div class="service-card p-5 h-100">
                         <div class="d-flex align-items-center mb-4">
                             <div class="bg-primary p-3 rounded-circle me-3 bg-opacity-25"><i class="fas fa-mobile-alt text-primary fa-2x"></i></div>
                             <div><h3 class="mb-0 fw-bold text-white">Apps a Medida</h3><small class="text-primary">Android & Web</small></div>
@@ -320,7 +273,7 @@
         </div>
     </section>
 
-    <section id="contacto" class="text-center">
+    <section id="contacto" class="text-center bg-glass-lighter">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
@@ -339,7 +292,7 @@
         </div>
     </section>
 
-    <footer class="py-4 text-center border-top border-secondary bg-glass">
+    <footer class="py-4 text-center border-top border-secondary bg-black">
         <div class="container"><p class="text-secondary m-0">&copy; 2026 <strong>JPR Digital</strong>.</p></div>
     </footer>
 
@@ -348,7 +301,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // MÁQUINA DE ESCRIBIR
         const textElement = document.getElementById('typing-text');
         const phrases = ["Tu Web Personal.", "Apps a Medida.", "Bots Inteligentes.", "JPR Digital."];
         let phraseIndex = 0; let charIndex = 0; let isDeleting = false; let typeSpeed = 100;
@@ -359,6 +311,25 @@
             setTimeout(type, typeSpeed);
         }
         document.addEventListener('DOMContentLoaded', type);
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.globe.min.js"></script>
+    <script>
+        VANTA.GLOBE({
+          el: "#vanta-bg",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          color: 0x0070f3, /* Color principal de los puntos */
+          color2: 0x00d4ff, /* Color secundario (brillo) */
+          backgroundColor: 0x050505, /* Fondo negro */
+          size: 1.0, 
+        })
     </script>
 </body>
 </html>
