@@ -10,99 +10,134 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ESTILOS BASE --- */
+        /* =========================================
+           1. VARIABLES Y BASE
+           ========================================= */
         :root {
-            --primary: #0070f3; /* Azul Tech */
+            --primary: #0070f3;
             --bg-black: #050505;
-            --bg-dark-grey: #111111;
             --text-light: #e0e0e0;
             --neon-cyan: #00d4ff;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-black);
             color: var(--text-light);
             overflow-x: hidden;
-            position: relative; /* Necesario para el fondo de partículas */
+            position: relative;
         }
 
-        /* --- FONDO DE PARTÍCULAS --- */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-            z-index: -1; /* Detrás de todo */
-        }
-
+        /* Espaciado de Secciones */
         section { padding: 100px 0; }
 
-        /* Navbar Efecto Cristal */
-        .navbar {
-            background: rgba(5, 5, 5, 0.8); /* Más transparente para ver el fondo */
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* =========================================
+           2. FONDO PLASMA 3D (PURO CSS)
+           ========================================= */
+        /* Contenedor fijo al fondo */
+        .background-shapes {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: #050505; /* Fondo negro base */
         }
 
-        /* --- Logo Neón Digital --- */
+        /* Estilo base para los orbes de luz */
+        .shape {
+            position: absolute;
+            filter: blur(120px); /* Desenfoque extremo para efecto 3D/Gas */
+            opacity: 0.6;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            border-radius: 50%;
+        }
+
+        /* Orbe 1: Azul Principal (Arriba Izquierda) */
+        .shape-1 {
+            top: -10%; left: -10%;
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(0,112,243,0.7) 0%, rgba(0,0,0,0) 70%);
+            animation: moveShape1 25s infinite alternate;
+        }
+
+        /* Orbe 2: Cian Neón (Abajo Derecha) */
+        .shape-2 {
+            bottom: -10%; right: -10%;
+            width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(0,212,255,0.5) 0%, rgba(0,0,0,0) 70%);
+            animation: moveShape2 30s infinite alternate;
+        }
+
+        /* Orbe 3: Acento Violeta (Centro Flotante) - Para profundidad */
+        .shape-3 {
+            top: 40%; left: 30%;
+            width: 40vw; height: 40vw;
+            background: radial-gradient(circle, rgba(120, 0, 255, 0.4) 0%, rgba(0,0,0,0) 70%);
+            animation: moveShape3 20s infinite alternate;
+        }
+
+        /* Animaciones lentas */
+        @keyframes moveShape1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(20%, 10%) scale(1.1); } }
+        @keyframes moveShape2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-20%, -10%) scale(0.9); } }
+        @keyframes moveShape3 { 0% { transform: translate(0, 0); } 100% { transform: translate(20%, -20%); } }
+
+        /* =========================================
+           3. EFECTO CRISTAL (Glassmorphism)
+           ========================================= */
+        /* Aplicamos transparencia y blur a los contenedores para ver el fondo */
+        
+        .navbar {
+            background: rgba(5, 5, 5, 0.6); /* Más transparente */
+            backdrop-filter: blur(20px); /* Efecto vidrio esmerilado */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Fondos de sección semitransparentes */
+        .bg-glass {
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(10px); /* Suaviza las formas de fondo detrás del texto */
+        }
+        
+        /* Tarjetas estilo Cristal */
+        .service-card, .card {
+            background: rgba(255, 255, 255, 0.03) !important; /* Muy sutil */
+            backdrop-filter: blur(20px); /* Fuerte blur para legibilidad */
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: 0.4s ease;
+            height: 100%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover, .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-cyan) !important;
+            background: rgba(255, 255, 255, 0.07) !important;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+        }
+
+        /* =========================================
+           4. LOGO NEÓN Y BOTONES LÍQUIDOS
+           ========================================= */
         .navbar-brand { font-weight: 800; letter-spacing: 1px; }
         .navbar-brand i, .navbar-brand {
             color: #ffffff !important;
-            text-shadow: 0 0 5px rgba(0, 212, 255, 0.8), 0 0 15px rgba(0, 112, 243, 0.8), 0 0 30px rgba(0, 112, 243, 0.6);
+            text-shadow: 0 0 5px rgba(0, 212, 255, 0.8), 0 0 15px rgba(0, 112, 243, 0.8);
             transition: all 0.3s ease;
         }
         .navbar-brand span.text-primary {
             color: var(--neon-cyan) !important;
-            text-shadow: 0 0 5px rgba(0, 212, 255, 1), 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.6);
+            text-shadow: 0 0 5px rgba(0, 212, 255, 1), 0 0 20px rgba(0, 212, 255, 0.8);
         }
         .navbar-brand:hover {
             transform: scale(1.02);
             text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 112, 243, 1);
         }
 
-        /* Hero Section - Hacemos transparente el fondo */
-        .hero {
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: transparent; /* Importante: transparente para ver partículas */
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            /* Usamos texto blanco con sombra neón para mejor contraste sobre partículas */
-            color: white;
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
-        }
-
-        /* Cursor */
-        .cursor { display: inline-block; width: 3px; background-color: var(--neon-cyan); animation: blink 1s infinite; box-shadow: 0 0 10px var(--neon-cyan); }
-        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-
-        /* Tarjetas con borde neón al hover */
-        .service-card {
-            background: rgba(26, 26, 26, 0.8); /* Semi-transparente */
-            backdrop-filter: blur(10px);
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 2.5rem;
-            transition: 0.3s;
-            height: 100%;
-        }
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
-        }
-
-        .icon-box { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem; text-shadow: 0 0 15px rgba(0, 112, 243, 0.6); }
-
-        /* --- Botones Líquidos / Energía --- */
+        /* Botón Líquido */
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -111,60 +146,63 @@
         .btn-custom-primary {
             background: linear-gradient(270deg, #0066cc, #00d4ff, #004e92, #00d4ff);
             background-size: 300% 300%;
-            border: none;
-            color: white !important;
-            font-weight: 600;
-            padding: 12px 40px;
-            border-radius: 50px;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-            animation: gradient-shift 8s ease infinite;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5), inset 0 0 10px rgba(255,255,255,0.2);
+            border: none; color: white !important; font-weight: 600; padding: 12px 40px;
+            border-radius: 50px; position: relative; z-index: 1; overflow: hidden;
+            animation: gradient-shift 6s ease infinite;
+            box-shadow: 0 0 20px rgba(0, 112, 243, 0.4);
             transition: all 0.3s ease;
         }
         .btn-custom-primary:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.8), inset 0 0 15px rgba(255,255,255,0.4);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.7);
         }
+
         .btn-custom-outline {
-            border-radius: 50px;
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1);
-            color: white;
-            font-weight: 500;
-            padding: 12px 40px;
+            border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.1);
+            color: white; font-weight: 500; padding: 12px 40px; background: rgba(255,255,255,0.01); backdrop-filter: blur(5px);
             transition: all 0.3s ease;
-            background: transparent;
         }
         .btn-custom-outline:hover {
-            background-color: rgba(0, 212, 255, 0.1);
-            border-color: #00d4ff;
-            color: white;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+            background: rgba(0, 212, 255, 0.1); border-color: #00d4ff; color: white;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
+        /* Hero Text & Utilities */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; color: white; text-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .cursor { display: inline-block; width: 3px; background-color: var(--neon-cyan); animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        
+        .icon-box { font-size: 2.5rem; color: var(--neon-cyan); margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px rgba(0,212,255,0.4)); }
 
-        /* Botón WhatsApp Flotante con Neón */
         .whatsapp-float {
             position: fixed; bottom: 30px; right: 30px;
             background-color: #25d366; color: white;
             border-radius: 50%; width: 60px; height: 60px;
             display: flex; align-items: center; justify-content: center;
             font-size: 30px; text-decoration: none; z-index: 1000;
-            transition: transform 0.3s;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: transform 0.3s; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
-        .whatsapp-float:hover { transform: scale(1.1); color: white; box-shadow: 0 0 25px rgba(37, 211, 102, 0.8); }
+        .whatsapp-float:hover { transform: scale(1.1); color: white; }
 
-        /* Fondos Alternados (Ahora semi-transparentes) */
-        .bg-zebra-dark { background-color: rgba(17, 17, 17, 0.9); }
-        .bg-zebra-black { background-color: rgba(5, 5, 5, 0.9); }
+        /* Píldoras de proceso */
+        .process-step {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+        }
 
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-3">
         <div class="container">
@@ -187,26 +225,24 @@
 
     <header class="hero">
         <div class="container">
-            <span class="badge border border-primary text-primary px-3 py-2 rounded-pill mb-3" style="box-shadow: 0 0 15px rgba(0,112,243,0.3)">Diseño Web & Automatización</span>
+            <span class="badge border border-primary text-primary px-3 py-2 rounded-pill mb-3" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(5px);">Diseño Web & Automatización</span>
             <h1 class="mb-3"><span id="typing-text"></span><span class="cursor">&nbsp;</span></h1>
-            <p class="lead text-secondary mb-5 mx-auto" style="max-width: 600px; text-shadow: 1px 1px 2px black;">
+            <p class="lead text-secondary mb-5 mx-auto" style="max-width: 600px; color: #ccc !important;">
                 Ayudamos a profesionales a digitalizar su negocio con páginas web modernas, bots inteligentes y aplicaciones a medida.
             </p>
             <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center px-4">
-    <a href="#servicios" class="btn btn-custom-primary w-100 w-sm-auto">Ver Servicios</a>
-    <a href="#contacto" class="btn btn-custom-outline w-100 w-sm-auto">Contactar</a>
-</div>
-
+                <a href="#servicios" class="btn btn-custom-primary w-100 w-sm-auto">Ver Servicios</a>
+                <a href="#contacto" class="btn btn-custom-outline w-100 w-sm-auto">Contactar</a>
+            </div>
         </div>
     </header>
 
-    <section id="servicios" class="bg-zebra-black">
+    <section id="servicios" class="bg-glass">
         <div class="container">
             <div class="text-center mb-5">
                 <h6 class="text-primary text-uppercase ls-2">Identidad Digital</h6>
                 <h2 class="fw-bold display-5 text-white">Tu Sitio Web Profesional</h2>
             </div>
-            
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="service-card">
@@ -233,8 +269,8 @@
         </div>
     </section>
 
-    <section id="proceso" class="bg-zebra-dark">
-         <div class="container">
+    <section id="proceso">
+        <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5 mb-5 mb-lg-0">
                     <h6 class="text-primary text-uppercase">Metodología</h6>
@@ -244,27 +280,66 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="row g-4">
-                        <div class="col-md-6"><div class="p-4 bg-black bg-opacity-50 rounded border border-dark"><span class="h1 text-primary fw-bold">01</span><h5 class="text-white mt-2">Briefing</h5></div></div>
-                        <div class="col-md-6"><div class="p-4 bg-black bg-opacity-50 rounded border border-dark"><span class="h1 text-primary fw-bold">02</span><h5 class="text-white mt-2">Desarrollo</h5></div></div>
-                        <div class="col-md-6"><div class="p-4 bg-black bg-opacity-50 rounded border border-dark"><span class="h1 text-primary fw-bold">03</span><h5 class="text-white mt-2">Revisión</h5></div></div>
-                        <div class="col-md-6"><div class="p-4 bg-black bg-opacity-50 rounded border border-primary" style="box-shadow: 0 0 15px rgba(0,112,243,0.3)"> <span class="h1 text-primary fw-bold">04</span><h5 class="text-white mt-2">Lanzamiento</h5></div></div>
+                        <div class="col-md-6"><div class="process-step"><span class="h1 text-primary fw-bold">01</span><h5 class="text-white mt-2">Briefing</h5><p class="text-secondary small m-0">Reunión breve para definir objetivos.</p></div></div>
+                        <div class="col-md-6"><div class="process-step"><span class="h1 text-primary fw-bold">02</span><h5 class="text-white mt-2">Desarrollo</h5><p class="text-secondary small m-0">Construcción técnica y diseño.</p></div></div>
+                        <div class="col-md-6"><div class="process-step"><span class="h1 text-primary fw-bold">03</span><h5 class="text-white mt-2">Revisión</h5><p class="text-secondary small m-0">Ajustes finales según feedback.</p></div></div>
+                        <div class="col-md-6"><div class="process-step" style="border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0,212,255,0.1);"> <span class="h1 text-primary fw-bold">04</span><h5 class="text-white mt-2">Lanzamiento</h5><p class="text-secondary small m-0">Tu web online.</p></div></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <section id="premium" class="bg-zebra-black">
-         <div class="container">
-            <div class="text-center mb-5"><h2 class="fw-bold display-5 text-white">Más allá de una Web</h2></div>
-             <div class="row g-4">
-                 <div class="col-md-6"><div class="card bg-dark bg-opacity-50 border-secondary h-100 text-white p-5"><h3 class="mb-0 fw-bold">Secretaria Virtual IA</h3></div></div>
-                 <div class="col-md-6"><div class="card bg-dark bg-opacity-50 border-secondary h-100 text-white p-5"><h3 class="mb-0 fw-bold">Apps a Medida</h3></div></div>
-             </div>
-         </div>
+
+    <section id="premium" class="bg-glass">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary px-3 py-2 mb-3">SERVICIOS AVANZADOS</span>
+                <h2 class="fw-bold display-5 text-white">Más allá de una Web</h2>
+                <p class="text-secondary">Automatización e Inteligencia Artificial.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-5 h-100">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary p-3 rounded-circle me-3 bg-opacity-25"><i class="fab fa-whatsapp text-primary fa-2x"></i></div>
+                            <div><h3 class="mb-0 fw-bold text-white">Secretaria Virtual IA</h3><small class="text-success">Disponible 24/7</small></div>
+                        </div>
+                        <p class="text-secondary mb-4">Bot inteligente que responde consultas y agenda reuniones.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-5 h-100">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary p-3 rounded-circle me-3 bg-opacity-25"><i class="fas fa-mobile-alt text-primary fa-2x"></i></div>
+                            <div><h3 class="mb-0 fw-bold text-white">Apps a Medida</h3><small class="text-primary">Android & Web</small></div>
+                        </div>
+                        <p class="text-secondary mb-4">Aplicaciones para gestión interna o clientes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer class="bg-black bg-opacity-75 py-4 text-center border-top border-dark">
+    <section id="contacto" class="text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h2 class="fw-bold mb-4 text-white">¿Listo para empezar?</h2>
+                    <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap">
+                        <a href="https://wa.me/5491127000116" class="btn btn-success btn-lg px-5 rounded-pill"><i class="fab fa-whatsapp me-2"></i> Chatear</a>
+                        <a href="mailto:ramatjuanpablo@gmail.com.ar" class="btn btn-outline-light btn-lg px-5 rounded-pill"><i class="fas fa-envelope me-2"></i> Email</a>
+                    </div>
+                    <div class="p-3 d-inline-block rounded" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">
+                         <div class="bg-white p-2 rounded d-inline-block">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://jprdigital.com.ar" alt="QR JPR" width="150">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4 text-center border-top border-secondary bg-glass">
         <div class="container"><p class="text-secondary m-0">&copy; 2026 <strong>JPR Digital</strong>.</p></div>
     </footer>
 
@@ -273,7 +348,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Efecto Máquina de Escribir (Original)
+        // MÁQUINA DE ESCRIBIR
         const textElement = document.getElementById('typing-text');
         const phrases = ["Tu Web Personal.", "Apps a Medida.", "Bots Inteligentes.", "JPR Digital."];
         let phraseIndex = 0; let charIndex = 0; let isDeleting = false; let typeSpeed = 100;
@@ -284,28 +359,6 @@
             setTimeout(type, typeSpeed);
         }
         document.addEventListener('DOMContentLoaded', type);
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // Configuración de la red neuronal (Colores azul/cian tech)
-        particlesJS("particles-js", {
-          "particles": {
-            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": ["#0070f3", "#00d4ff"] },
-            "shape": { "type": "circle" },
-            "opacity": { "value": 0.5, "random": false },
-            "size": { "value": 3, "random": true },
-            "line_linked": { "enable": true, "distance": 150, "color": "#0070f3", "opacity": 0.4, "width": 1 },
-            "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-          },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-            "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
-          },
-          "retina_detect": true
-        });
     </script>
 </body>
 </html>
