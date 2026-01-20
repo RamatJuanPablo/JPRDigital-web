@@ -3,144 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JPR Digital | Nexus Dinámico</title>
+    <title>JPR Digital | Arquitectura Monocromática</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    /* Usamos una fuente más "brutalista" y técnica */
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIABLES --- */
         :root {
-            --primary: #0070f3;
-            --neon-cyan: #00d4ff;
-            --text-light: #ffffff;
+            --bg-main: #0a0a0a;
+            --text-white: #ffffff;
+            --text-grey: #888888;
         }
-
-        /* IMPORTANTE: El body debe ser transparente para ver las partículas detrás */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: transparent; 
-            color: var(--text-light);
-            overflow-x: hidden;
-            position: relative;
-            margin: 0;
+            font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-main); color: var(--text-white); overflow-x: hidden;
+            /* El truco del foco de luz siguiendo al mouse */
+            background-image: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.15) 0%, rgba(0,0,0,0) 40%);
         }
+        section { padding: 150px 0; }
 
-        section { padding: 120px 0; }
+        /* LOGO MONOCROMÁTICO LIMPIO */
+        .navbar-brand { font-weight: 700; letter-spacing: 2px; color: white !important; text-transform: uppercase; }
+        .navbar-brand i { color: white !important; }
+        .navbar-brand span { color: #888 !important; } /* El "Digital" en gris */
 
-        /* --- FONDO INTERACTIVO --- */
-        #tsparticles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1; /* Se queda atrás */
-            /* El color de fondo va AQUÍ, no en el body */
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        .navbar { background: rgba(10,10,10,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+        /* TIPOGRAFÍA GIGANTE */
+        .hero h1 { font-size: 5.5rem; font-weight: 700; line-height: 1; letter-spacing: -3px; margin-bottom: 2rem; }
+        .outline-text { -webkit-text-stroke: 2px white; color: transparent; }
+
+        /* BOTÓN BLANCO Y NEGRO */
+        .btn-mono {
+            background: white; color: black; font-weight: 700; padding: 15px 50px; border-radius: 0; /* Bordes rectos */
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
+        .btn-mono:hover { background: transparent; color: white; border: 2px solid white; transform: scale(1.05); }
 
-        /* --- LOGO --- */
-        .navbar-brand { font-weight: 800; letter-spacing: 1px; color: white !important; }
-        .navbar-brand i { color: var(--primary); }
-        .navbar-brand span.text-primary { color: var(--primary) !important; }
-
-        /* Navbar Transparente */
-        .navbar { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-
-        /* --- BOTONES LÍQUIDOS --- */
-        @keyframes gradient-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .btn-custom-primary {
-            background: linear-gradient(270deg, #0066cc, #00d4ff, #004e92); background-size: 300% 300%;
-            border: none; color: white !important; font-weight: 600; padding: 15px 50px; border-radius: 50px;
-            animation: gradient-shift 3s ease infinite;
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.5); transition: all 0.3s ease;
+        /* ANIMACIONES AL SCROLL (Scroll Reveal) */
+        .reveal {
+            opacity: 0; transform: translateY(50px) scale(0.95); /* Empieza abajo y pequeño */
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .btn-custom-primary:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 50px rgba(0, 212, 255, 0.9); }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); } /* Estado final */
 
-        /* Hero */
-        .hero { min-height: 90vh; display: flex; align-items: center; text-align: center; }
-        .hero h1 { font-size: 4.5rem; font-weight: 800; letter-spacing: -2px; text-shadow: 0 0 30px rgba(0, 112, 243, 0.3); }
-        
-        /* Tarjetas */
-        .service-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px); padding: 3rem; border-radius: 20px; transition: 0.4s;
+        /* Tarjetas Brutalistas */
+        .mono-card {
+            border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.03);
+            padding: 4rem 2rem; transition: 0.4s;
         }
-        .service-card:hover { 
-            border-color: var(--neon-cyan); 
-            background: linear-gradient(145deg, rgba(0, 112, 243, 0.2), transparent);
-            transform: translateY(-15px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-        .icon-box { font-size: 3.5rem; color: var(--neon-cyan); margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px var(--primary)); }
+        .mono-card:hover { background: white; color: black !important; border-color: white; }
+        .mono-card:hover .text-grey { color: #333 !important; }
+        .mono-card i { font-size: 3rem; margin-bottom: 2rem; display: block; }
 
     </style>
 </head>
 <body>
-    <div id="tsparticles"></div>
-
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-4">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fas fa-code"></i> JPR<span class="text-primary">Digital</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-custom-primary ms-3 px-4 text-white" href="#contacto">Contacto</a></li>
-                </ul>
-            </div>
+            <a class="navbar-brand" href="#"><i class="fas fa-square"></i> JPR<span>Digital</span>.</a>
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="container">
-            <h1 class="mb-4">Conectamos tu negocio<br>al futuro digital.</h1>
-            <p class="lead text-secondary mb-5 mx-auto" style="max-width: 600px; font-size: 1.3rem;">Mueve tu mouse para interactuar con la red neuronal.</p>
-            <a href="#contacto" class="btn btn-custom-primary">Empezar Ahora</a>
+    <header class="hero section d-flex align-items-center">
+        <div class="container reveal">
+            <h1>INGENIERÍA<br><span class="outline-text">DIGITAL.</span></h1>
+            <p class="lead text-grey mb-5" style="max-width: 500px; font-size: 1.5rem;">Creamos sistemas, no solo sitios web. Precisión y automatización para negocios exigentes.</p>
+            <a href="#" class="btn btn-mono">Explorar Sistema</a>
         </div>
     </header>
 
-    <section id="servicios">
+    <section>
         <div class="container">
-            <div class="row g-4">
-                <div class="col-md-4"><div class="service-card"><div class="icon-box"><i class="fas fa-bolt"></i></div><h4>Velocidad</h4><p class="text-secondary">Webs ultrarrápidas.</p></div></div>
-                <div class="col-md-4"><div class="service-card"><div class="icon-box"><i class="fas fa-brain"></i></div><h4>Inteligencia</h4><p class="text-secondary">Automatización IA.</p></div></div>
-                <div class="col-md-4"><div class="service-card"><div class="icon-box"><i class="fas fa-shield-alt"></i></div><h4>Seguridad</h4><p class="text-secondary">Blindaje total.</p></div></div>
+            <div class="row g-0"> <div class="col-md-4 reveal" style="transition-delay: 0.2s">
+                    <div class="mono-card">
+                        <i class="fas fa-cubes"></i>
+                        <h3>Estructura</h3>
+                        <p class="text-grey">Desarrollo web robusto y escalable.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal" style="transition-delay: 0.4s">
+                    <div class="mono-card" style="border-left: none; border-right: none;">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>Automatización</h3>
+                        <p class="text-grey">Flujos de trabajo sin intervención humana.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal" style="transition-delay: 0.6s">
+                    <div class="mono-card">
+                        <i class="fas fa-fingerprint"></i>
+                        <h3>Identidad</h3>
+                        <p class="text-grey">Diseño único que define tu marca.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.0/tsparticles.bundle.min.js"></script>
-    
     <script>
-        // CORRECCIÓN: Usar 'tsParticles' con P mayúscula
-        tsParticles.load("tsparticles", {
-          fpsLimit: 60,
-          fullScreen: { enable: false },
-          interactivity: {
-            events: {
-              onHover: { enable: true, mode: "repulse" }, // PRUEBA: 'repulse' aleja las partículas, 'grab' las conecta
-              resize: true
-            },
-            modes: { 
-                grab: { distance: 200, links: { opacity: 1, color: "#00d4ff" } },
-                repulse: { distance: 100, duration: 0.4 } // Efecto de empuje
-            }
-          },
-          particles: {
-            color: { value: "#00d4ff" },
-            links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.2, width: 1 },
-            move: { enable: true, speed: 2, direction: "none", random: false, straight: false, outModes: "out" },
-            number: { density: { enable: true, area: 800 }, value: 100 },
-            opacity: { value: 0.5 },
-            shape: { type: "circle" },
-            size: { value: { min: 1, max: 5 } }
-          },
-          detectRetina: true
+        // 1. Script para el foco de luz que sigue al mouse
+        document.body.addEventListener('mousemove', e => {
+            document.body.style.setProperty('--x', `${e.clientX}px`);
+            document.body.style.setProperty('--y', `${e.clientY}px`);
         });
+
+        // 2. Script para la animación al hacer scroll (Intersection Observer)
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 }); // Se activa cuando el 10% del elemento es visible
+
+        reveals.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
