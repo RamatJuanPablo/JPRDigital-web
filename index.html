@@ -9,139 +9,99 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --primary: #0070f3; /* Azul Tech */
-            --bg-black: #050505;
-            --bg-dark-grey: #111111;
-            --text-light: #e0e0e0;
-        }
+/* =========================================
+   NUEVO CSS COMÚN (Logo y Botones)
+   Añade esto a tu existente
+========================================= */
+<style>
+/* --- Logo Neón Digital --- */
+.navbar-brand {
+    font-weight: 800;
+    letter-spacing: 1px;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-black);
-            color: var(--text-light);
-            overflow-x: hidden;
-        }
-
-        /* Espaciado Generoso entre secciones para que "respiren" */
-        section {
-            padding: 100px 0; /* Mucho aire arriba y abajo */
-        }
-
-        /* Navbar Efecto Cristal */
-        .navbar {
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #222;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 90vh; /* Pantalla casi completa */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: -webkit-linear-gradient(45deg, #0070f3, #00d4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Cursor parpadeante */
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            background-color: #00d4ff;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-
-        /* Tarjetas */
-        .service-card {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 2.5rem;
-            transition: 0.3s;
-            height: 100%;
-        }
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 112, 243, 0.2);
-        }
-
-        .icon-box { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem; }
-
-        /* Botón WhatsApp Flotante */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25d366;
-            color: white;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            text-decoration: none;
-            z-index: 1000;
-            transition: transform 0.3s;
-        }
-        .whatsapp-float:hover { transform: scale(1.1); color: white; }
-
-
-/* Botón Principal (Ver Servicios) */
-.btn-custom-primary {
-    background: linear-gradient(90deg, #0066cc 0%, #0099ff 100%); /* Degradado azul */
-    border: none;
-    color: white;
-    font-weight: 600;
-    padding: 12px 40px; /* Más espacio interno */
+/* La parte blanca del logo con brillo azul */
+.navbar-brand i,
+.navbar-brand {
+    color: #ffffff !important;
+    text-shadow: 
+        0 0 5px rgba(0, 212, 255, 0.8),
+        0 0 15px rgba(0, 112, 243, 0.8),
+        0 0 30px rgba(0, 112, 243, 0.6);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4); /* Resplandor azul */
+}
+
+/* La parte "Digital" con brillo cian más intenso */
+.navbar-brand span.text-primary {
+    color: #00d4ff !important;
+    text-shadow: 
+        0 0 5px rgba(0, 212, 255, 1),
+        0 0 20px rgba(0, 212, 255, 0.8),
+        0 0 40px rgba(0, 212, 255, 0.6);
+}
+
+.navbar-brand:hover {
+    transform: scale(1.02);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 112, 243, 1);
+}
+
+
+/* --- Botones Líquidos / Energía --- */
+
+/* Animación para el movimiento del fondo líquido */
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.btn-custom-primary {
+    /* Creamos un degradado más complejo y grande */
+    background: linear-gradient(270deg, #0066cc, #00d4ff, #004e92, #00d4ff);
+    background-size: 300% 300%; /* Hacemos el fondo grande para animarlo */
+    border: none;
+    color: white !important;
+    font-weight: 600;
+    padding: 12px 40px;
+    border-radius: 50px; /* Bordes más redondeados para efecto líquido */
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    /* Animación continua del fondo */
+    animation: gradient-shift 8s ease infinite;
+    /* Resplandor inicial */
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5), inset 0 0 10px rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
 }
 
 .btn-custom-primary:hover {
-    transform: translateY(-2px); /* Se eleva un poco */
-    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.6); /* Más resplandor */
-    color: white;
+    transform: translateY(-3px) scale(1.02);
+    /* Aumentamos el brillo al pasar el mouse */
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.8), inset 0 0 15px rgba(255,255,255,0.4);
 }
 
-/* Botón Secundario (Contactar) */
+/* Ajuste al botón secundario para que combine */
 .btn-custom-outline {
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    font-weight: 500;
-    padding: 12px 40px;
-    transition: all 0.3s ease;
+    border-radius: 50px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1);
 }
-
 .btn-custom-outline:hover {
-    border-color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+    background-color: rgba(0, 212, 255, 0.1);
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
 }
 
-
-
-        /* Fondos Alternados para separar secciones */
-        .bg-zebra-dark { background-color: var(--bg-dark-grey); }
-        .bg-zebra-black { background-color: var(--bg-black); }
-
-    </style>
+/* Actualización menor a las tarjetas para que coincidan con el tema neón */
+.service-card:hover,
+.bg-black.border-primary {
+     border-color: #00d4ff !important;
+     box-shadow: 0 0 25px rgba(0, 112, 243, 0.3);
+}
+.icon-box {
+    text-shadow: 0 0 15px rgba(0, 112, 243, 0.6);
+}
+</style>    
 </head>
 <body>
 
