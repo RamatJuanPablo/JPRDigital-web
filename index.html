@@ -57,20 +57,23 @@
         }
 
         /* --- CUBOS GIRATORIOS (Vuelven) --- */
+        /* --- EL "ALGO MÁS": CUBOS FLOTANTES --- */
         .cube {
-            position: absolute; width: 80px; height: 80px;
-            background: rgba(197, 160, 89, 0.05); /* Dorado muy sutil */
+            position: absolute; width: 50px; height: 50px;
+            background: rgba(197, 160, 89, 0.1); /* Dorado transparente */
             border: 1px solid var(--accent-gold);
             transform-style: preserve-3d;
-            animation: rotateCube 20s infinite linear;
+            animation: floatCube 10s infinite linear;
         }
-        .cube:nth-child(1) { top: 15%; right: 10%; }
-        .cube:nth-child(2) { bottom: 20%; left: 5%; width: 120px; height: 120px; animation-duration: 25s; animation-direction: reverse; }
-        @keyframes rotateCube {
-            from { transform: rotateX(0) rotateY(0) rotateZ(0); }
-            to { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-        }
+        .cube:nth-child(1) { top: 20%; left: 10%; animation-duration: 12s; }
+        .cube:nth-child(2) { top: 60%; right: 15%; width: 80px; height: 80px; animation-duration: 18s; animation-direction: reverse; }
+        .cube:nth-child(3) { bottom: 10%; left: 20%; width: 40px; height: 40px; animation-duration: 15s; }
 
+        @keyframes floatCube {
+            0% { transform: rotateX(0) rotateY(0) translateZ(0); }
+            50% { transform: rotateX(180deg) rotateY(90deg) translateZ(50px); }
+            100% { transform: rotateX(360deg) rotateY(360deg) translateZ(0); }
+        }
         /* =========================================
            2. SEPARACIÓN EXTREMA Y SCROLL SUAVE
            ========================================= */
