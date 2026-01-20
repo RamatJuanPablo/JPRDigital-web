@@ -3,98 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JPR Digital | Identidad Artificial</title>
+    <title>JPR Digital | Futuro Brutalista</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
+        /* =========================================
+           ESTÉTICA "BLANCO SOBRE BLANCO"
+           ========================================= */
         :root {
-            --primary: #0070f3; --neon-pink: #ff00ff; --neon-cyan: #00d4ff; --bg-black: #050505;
-        }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-black); color: white; overflow-x: hidden; }
-
-        /* Fondo de rejilla cyberpunk sutil */
-        .cyber-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: 
-                linear-gradient(rgba(0, 112, 243, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 112, 243, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            perspective: 1000px; transform: rotateX(60deg) scale(2); /* Efecto de suelo 3D */
-            opacity: 0.3;
+            --bg-main: #ffffff;
+            --stroke-color: #000000;
         }
 
-        /* LOGO LIMPIO */
-        .navbar-brand { font-weight: 800; color: white !important; }
-        .navbar-brand i, .navbar-brand span { color: var(--primary) !important; }
-        .navbar { background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); }
-
-        /* --- LA CARA NEÓN SVG --- */
-        .hero-visual {
-            max-width: 600px; margin: 0 auto; position: relative;
-        }
-        /* Animación del trazo SVG */
-        .svg-face path, .svg-face circle {
-            fill: none;
-            stroke: var(--neon-cyan); /* Color base del trazo */
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-dasharray: 1000; /* Longitud del trazo */
-            stroke-dashoffset: 1000; /* Empieza oculto */
-            animation: drawFace 4s ease-in-out forwards infinite alternate; /* Animación de "dibujado" */
-        }
-        /* La parte del "cerebro" en otro color */
-        .svg-face .brain-lines { stroke: var(--neon-pink); }
-
-        /* El resplandor de neón */
-        .svg-face {
-            filter: drop-shadow(0 0 10px var(--neon-cyan)) drop-shadow(0 0 30px var(--primary));
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            overflow-x: hidden;
+             /* Esto asegura que TODO el texto base sea blanco */
+            color: white !important;
         }
 
-        @keyframes drawFace {
-            to { stroke-dashoffset: 0; } /* Se dibuja completo */
+        /* --- EL TRUCO DEL TEXTO ---
+           Aplicamos un borde negro intenso a TODO el texto para que se lea sobre blanco */
+        body, p, a, i, span, li, .btn {
+            text-shadow: 
+                -1px -1px 0 var(--stroke-color), 
+                 1px -1px 0 var(--stroke-color), 
+                -1px  1px 0 var(--stroke-color), 
+                 1px  1px 0 var(--stroke-color), /* Borde duro */
+                 0 2px 5px rgba(0,0,0,0.3); /* Sombra suave para profundidad */
+        }
+
+        /* Títulos Grandes: Usamos "Hollow Text" (hueco) para un look más técnico */
+        h1, h2, h3, h4, h5, .navbar-brand {
+            font-family: 'Syncopate', sans-serif;
+            color: transparent !important; /* Relleno transparente */
+            -webkit-text-stroke: 2px var(--stroke-color); /* Trazo negro grueso */
+            text-shadow: none; /* Quitamos la sombra normal para que quede nítido */
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
         
-        /* Hero Content */
-        .hero { padding-top: 150px; min-height: 100vh; }
-        .hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; }
-        .highlight { color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+        /* Ajuste específico para la máquina de escribir para que coincida */
+        #typing-text {
+             color: white !important;
+             -webkit-text-stroke: 0; /* Quitamos el stroke grueso */
+              text-shadow: 
+                -1px -1px 0 var(--stroke-color), 
+                 1px -1px 0 var(--stroke-color), 
+                -1px  1px 0 var(--stroke-color), 
+                 1px  1px 0 var(--stroke-color);
+        }
+
+
+        /* =========================================
+           ANIMACIONES DE SCROLL (Fade In / Out)
+           ========================================= */
+        /* Estado inicial: Invisible, desplazado y borroso */
+        .scroll-block {
+            opacity: 0;
+            filter: blur(10px);
+            transform: scale(0.95) translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Estado visible: Cuando entra en pantalla */
+        .scroll-block.in-view {
+            opacity: 1;
+            filter: blur(0);
+            transform: scale(1) translateY(0);
+        }
+
+
+        /* =========================================
+           COMPONENTES
+           ========================================= */
+        section { padding: 150px 0; min-height: 80vh; display: flex; align-items: center; }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8); /* Blanco semitransparente */
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--stroke-color);
+        }
+
+        /* Botones Brutalistas */
+        .btn-brutal {
+            background: white;
+            border: 3px solid var(--stroke-color);
+            color: white !important; /* El texto es blanco con borde negro por la regla global */
+            font-weight: 800;
+            padding: 15px 40px;
+            text-transform: uppercase;
+            border-radius: 0 !important; /* Bordes rectos */
+            position: relative;
+            transition: 0.3s;
+            box-shadow: 5px 5px 0 var(--stroke-color); /* Sombra sólida */
+        }
+        .btn-brutal:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--stroke-color);
+        }
+        
+        /* Tarjetas */
+        .card-brutal {
+            border: 3px solid var(--stroke-color);
+            background: white;
+            padding: 3rem;
+            height: 100%;
+            transition: 0.3s;
+        }
+        .card-brutal:hover {
+            background: var(--stroke-color);
+        }
+        /* Al hacer hover, invertimos los colores para un efecto dramático */
+        .card-brutal:hover h3, .card-brutal:hover i, .card-brutal:hover p {
+            color: white !important;
+            -webkit-text-stroke: 0;
+            text-shadow: none;
+        }
+        .icon-box { font-size: 4rem; margin-bottom: 2rem; display: inline-block;}
 
     </style>
 </head>
 <body>
-    <div class="cyber-grid"></div>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-4">
-        <div class="container"><a class="navbar-brand" href="#"><i class="fas fa-code"></i> JPR<span>Digital</span></a></div>
+
+    <nav class="navbar navbar-expand-lg fixed-top py-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">JPR//Digital.</a>
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span> </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-4">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
-    <header class="hero text-center text-lg-start align-items-center d-flex">
+    <header id="hero" class="scroll-block">
+        <div class="container text-center">
+            <h1 class="display-1 fw-bold mb-4">INGENIERÍA<br>DIGITAL</h1>
+            <h2 class="mb-5"><span id="typing-text"></span><span class="cursor">_</span></h2>
+            
+            <div class="d-flex justify-content-center gap-4">
+                <a href="#servicios" class="btn btn-brutal">Explorar</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="servicios" class="scroll-block">
         <div class="container">
-            <div class="row align-items-center gx-5">
-                <div class="col-lg-6 mb-5 mb-lg-0">
-                    <h1 class="mb-4">Tu Identidad Digital, <span class="highlight">Inteligente.</span></h1>
-                    <p class="lead text-secondary mb-5">Fusionamos diseño web y automatización con IA para darle vida y cerebro a tu negocio.</p>
-                    <a href="#" class="btn btn-custom-primary px-5 py-3 rounded-pill fw-bold" style="background: linear-gradient(90deg, var(--primary), var(--neon-cyan)); color: white; box-shadow: 0 0 30px rgba(0,112,243,0.5);">CONECTAR AHORA</a>
+            <div class="row g-0"> <div class="col-lg-4">
+                    <div class="card-brutal" style="border-right: none;">
+                        <i class="fas fa-cube icon-box"></i>
+                        <h3>Estructura Web</h3>
+                        <p class="lead">Desarrollo sólido. No solo se ve bien, funciona como una máquina.</p>
+                    </div>
                 </div>
-                <div class="col-lg-6 text-center">
-                    <div class="hero-visual">
-                        <svg class="svg-face" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100,230 C50,230 30,180 30,130 C30,70 60,30 100,30 C140,30 170,70 170,130 C170,180 150,230 100,230 Z" />
-                            <g class="brain-lines">
-                                <path d="M60,130 C60,100 80,80 100,80 C120,80 140,100 140,130" />
-                                <path d="M45,110 C55,60 100,50 155,110" />
-                                <circle cx="100" cy="130" r="15" />
-                                <circle cx="100" cy="80" r="5" />
-                                <circle cx="60" cy="130" r="5" />
-                                <circle cx="140" cy="130" r="5" />
-                            </g>
-                            <path d="M70,200 L70,250 M130,200 L130,250 M100,230 L100,250" />
-                        </svg>
+                <div class="col-lg-4">
+                    <div class="card-brutal">
+                        <i class="fas fa-bolt icon-box"></i>
+                        <h3>Automatización</h3>
+                        <p class="lead">Conectamos sistemas para que tu negocio trabaje solo.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card-brutal" style="border-left: none;">
+                        <i class="fas fa-fingerprint icon-box"></i>
+                        <h3>Identidad Única</h3>
+                        <p class="lead">Diseño de alto impacto que aplasta a la competencia.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
+
+    <section id="contacto" class="scroll-block">
+        <div class="container text-center">
+             <h2 class="display-3 fw-bold mb-5">INICIAR SISTEMA</h2>
+             <p class="lead mb-5" style="font-size: 1.5rem;">¿Listo para subir de nivel? Hablemos de código.</p>
+             <a href="https://wa.me/5491127000116" class="btn btn-brutal px-5 py-3" style="font-size: 1.2rem;">
+                <i class="fab fa-whatsapp me-2"></i> Conectar
+            </a>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 1. SCRIPT DE ANIMACIÓN DE SCROLL (Intersection Observer de doble vía)
+        const scrollBlocks = document.querySelectorAll('.scroll-block');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-10% 0px', // Margen para que la animación no empiece justo al borde
+            threshold: 0.2 // Se activa cuando el 20% del elemento es visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Si entra en pantalla, añade la clase
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                } 
+                // Si SALE de pantalla (hacia arriba o abajo), quita la clase
+                else {
+                    // Opcional: Verificar si ya pasó para no re-animar el header al subir
+                    // if(entry.boundingClientRect.top > 0) { 
+                        entry.target.classList.remove('in-view');
+                    // }
+                }
+            });
+        }, observerOptions);
+
+        scrollBlocks.forEach(block => {
+            observer.observe(block);
+        });
+
+
+        // 2. MÁQUINA DE ESCRIBIR (Tu script original)
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["TU WEB PERSONAL.", "APPS A MEDIDA.", "BOTS INTELIGENTES."];
+        let phraseIndex = 0; let charIndex = 0; let isDeleting = false; let typeSpeed = 100;
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) { textElement.textContent = currentPhrase.substring(0, charIndex - 1); charIndex--; typeSpeed = 50; } else { textElement.textContent = currentPhrase.substring(0, charIndex + 1); charIndex++; typeSpeed = 100; }
+            if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; typeSpeed = 2000; } else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
+            setTimeout(type, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
 </body>
 </html>
