@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JPR Digital | World Tech</title>
+    <title>JPR Digital | Global Neural Network</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -11,15 +11,15 @@
 
     <style>
         :root {
-            /* PALETA DARK NEON ORIGINAL */
+            /* PALETA DARK ORIGINAL */
             --bg-black: #050505;
-            --primary: #0070f3;         
-            --neon-cyan: #00d4ff;       
+            --primary: #0070f3;
+            --neon-cyan: #00d4ff;
             --text-white: #ffffff;
             --text-grey: #b0b0b0;
             
-            /* Fondo semitransparente para bloques */
-            --glass-bg: rgba(10, 10, 10, 0.6); 
+            /* Bloques con efecto cristal oscuro */
+            --glass-bg: rgba(10, 10, 15, 0.6); 
         }
 
         body {
@@ -36,12 +36,11 @@
             letter-spacing: 2px;
         }
 
-        /* Textos con brillo */
         .text-neon { color: var(--neon-cyan) !important; text-shadow: 0 0 15px rgba(0, 212, 255, 0.6); }
-        .text-glow { text-shadow: 0 0 20px rgba(0, 112, 243, 0.4); }
+        .text-glow { text-shadow: 0 0 25px rgba(0, 112, 243, 0.5); }
 
         /* =========================================
-           1. FONDO GLOBO 3D (Vanta.js)
+           1. FONDO GLOBO (Vanta Canvas)
            ========================================= */
         #vanta-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -49,66 +48,50 @@
         }
 
         /* =========================================
-           2. ESTRUCTURA Y ESPACIADO
+           2. SECCIONES Y ESPACIADO
            ========================================= */
         section { 
-            min-height: 110vh; /* Buena separación */
+            min-height: 120vh; /* Mucho espacio para apreciar el fondo al scrollear */
             display: flex; align-items: center; 
             padding: 100px 0;
         }
-        #hero { padding-top: 180px; }
+        
+        /* Alineación del Hero a la izquierda como pediste */
+        #hero { padding-top: 150px; text-align: left; }
 
-        /* Efecto de Desvanecimiento al Scrollear */
         .scroll-block {
-            opacity: 0; filter: blur(15px); transform: scale(0.95) translateY(50px);
-            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0; filter: blur(20px); transform: translateY(50px);
+            transition: all 1s ease-out;
         }
-        .scroll-block.in-view { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
+        .scroll-block.in-view { opacity: 1; filter: blur(0); transform: translateY(0); }
 
         /* =========================================
-           3. TARJETAS Y BOTONES (Estilo Tech)
+           3. ESTILOS DE COMPONENTES
            ========================================= */
         .service-card {
             background: var(--glass-bg);
-            border: 1px solid rgba(0, 212, 255, 0.15); /* Borde sutil cian */
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 3rem 2rem;
-            height: 100%;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 1px solid rgba(0, 112, 243, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 3rem;
+            transition: 0.4s ease;
         }
-
         .service-card:hover {
             transform: translateY(-10px);
             border-color: var(--neon-cyan);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.05);
+            box-shadow: 0 0 40px rgba(0, 112, 243, 0.2);
         }
+        .service-card i { color: var(--neon-cyan); font-size: 2.5rem; margin-bottom: 1.5rem; }
 
-        .service-card i { color: var(--neon-cyan); font-size: 2.5rem; margin-bottom: 1.5rem; filter: drop-shadow(0 0 5px var(--primary)); }
-        .service-card h3 { color: white; font-size: 1.5rem; margin-bottom: 1rem; }
-
-        /* Botones Neón Líquido */
-        @keyframes liquid-move { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
+        /* Botones Neón */
         .btn-neon {
-            background: linear-gradient(90deg, #0070f3, #00d4ff, #0070f3);
-            background-size: 200% 200%;
+            background: linear-gradient(90deg, #0070f3, #00d4ff);
             color: white !important; border: none; padding: 15px 45px; border-radius: 50px; font-weight: 700;
-            animation: liquid-move 3s linear infinite;
-            box-shadow: 0 0 25px rgba(0, 112, 243, 0.5);
-            transition: transform 0.3s;
+            box-shadow: 0 0 20px rgba(0, 112, 243, 0.5); transition: 0.3s;
         }
-        .btn-neon:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(0, 212, 255, 0.8); }
+        .btn-neon:hover { box-shadow: 0 0 40px rgba(0, 212, 255, 0.8); transform: scale(1.05); }
 
-        .btn-outline {
-            background: transparent; border: 2px solid var(--neon-cyan); color: white; padding: 13px 40px; border-radius: 50px; font-weight: 600;
-            transition: 0.3s;
-        }
-        .btn-outline:hover { background: rgba(0, 212, 255, 0.1); box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); color: white; }
-
-        /* Navbar */
-        .navbar { background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .navbar { background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05); }
 
     </style>
 </head>
@@ -119,16 +102,14 @@
     <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
             <a class="navbar-brand fw-bold text-white" href="#">
-                <i class="fas fa-globe text-neon me-2"></i>JPR <span class="text-neon">DIGITAL</span>
+                <i class="fas fa-brain text-neon me-2"></i>JPR <span class="text-neon">DIGITAL</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-            </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon" style="filter: invert(1);"></span></button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav gap-3">
-                    <li class="nav-item"><a class="nav-link text-white small ls-1" href="#hero">INICIO</a></li>
-                    <li class="nav-item"><a class="nav-link text-white small ls-1" href="#servicios">SERVICIOS</a></li>
-                    <li class="nav-item"><a class="nav-link text-white small ls-1" href="#contacto">CONTACTO</a></li>
+                    <li class="nav-item"><a class="nav-link text-white small" href="#hero">INICIO</a></li>
+                    <li class="nav-item"><a class="nav-link text-white small" href="#servicios">SERVICIOS</a></li>
+                    <li class="nav-item"><a class="nav-link text-white small" href="#contacto">CONTACTO</a></li>
                 </ul>
             </div>
         </div>
@@ -136,20 +117,18 @@
 
     <header id="hero" class="scroll-block">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <div class="d-inline-block px-3 py-1 mb-4 rounded-pill" style="border: 1px solid var(--neon-cyan); color: var(--neon-cyan); font-size: 0.75rem; font-weight: bold; background: rgba(0, 212, 255, 0.05);">
-                        ALCANCE GLOBAL
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="d-inline-block px-3 py-1 mb-4 rounded-pill" style="border: 1px solid var(--neon-cyan); color: var(--neon-cyan); font-size: 0.8rem; background: rgba(0, 212, 255, 0.05);">
+                        RED NEURONAL DIGITAL
                     </div>
                     <h1 class="display-2 fw-bold mb-4 text-glow">
-                        TU NEGOCIO <span class="text-neon">DIGITAL.</span>
+                        TU NEGOCIO <br><span class="text-neon">CONECTADO.</span>
                     </h1>
-                    <h4 class="mb-5 text-grey" style="min-height: 30px; font-weight: 300;">
-                        <span id="typing-text"></span><span class="cursor">_</span>
-                    </h4>
-                    <div class="d-flex gap-4 mt-5 flex-wrap">
+                    <h4 class="mb-5 text-grey fw-light"><span id="typing-text"></span><span class="cursor">|</span></h4>
+                    
+                    <div class="d-flex gap-4">
                         <a href="#servicios" class="btn-neon">VER SERVICIOS</a>
-                        <a href="#contacto" class="btn-outline">CONTACTAR</a>
                     </div>
                 </div>
             </div>
@@ -158,29 +137,27 @@
 
     <section id="servicios" class="scroll-block">
         <div class="container">
-            <div class="row mb-5">
-                <div class="col-12"><h2 class="display-3 fw-bold">SERVICIOS <span class="text-neon">TECH</span></h2></div>
-            </div>
+            <div class="row mb-5"><div class="col-12"><h2 class="display-4 fw-bold">SOLUCIONES <span class="text-neon">TECH</span></h2></div></div>
             <div class="row g-5">
                 <div class="col-md-4">
                     <div class="service-card">
-                        <i class="fas fa-code"></i>
-                        <h3>LANDING PAGE</h3>
-                        <p class="text-grey mt-3">Sitios web optimizados para el mundo real. Velocidad, conversión y diseño global.</p>
+                        <i class="fas fa-globe"></i>
+                        <h3>WEB GLOBAL</h3>
+                        <p class="text-grey">Sitios optimizados para alcance mundial. Velocidad y conversión sin fronteras.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="service-card">
                         <i class="fas fa-project-diagram"></i>
-                        <h3>AUTOMATIZACIÓN</h3>
-                        <p class="text-grey mt-3">Conectamos tu negocio como una red neuronal. Bots y procesos inteligentes 24/7.</p>
+                        <h3>REDES DE IA</h3>
+                        <p class="text-grey">Automatización inteligente que conecta todos los puntos de tu negocio.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="service-card">
                         <i class="fas fa-mobile-alt"></i>
-                        <h3>APPS A MEDIDA</h3>
-                        <p class="text-grey mt-3">Desarrollo de software y aplicaciones que ponen tu marca en el mapa.</p>
+                        <h3>ECOSISTEMA APP</h3>
+                        <p class="text-grey">Aplicaciones nativas integradas a tu infraestructura digital.</p>
                     </div>
                 </div>
             </div>
@@ -191,18 +168,13 @@
         <div class="container">
              <div class="row align-items-center">
                 <div class="col-lg-6">
-                     <h2 class="display-3 fw-bold mb-4">CONECTA CON EL <span class="text-neon">FUTURO</span></h2>
-                     <p class="lead text-grey mb-5">Lleva tu empresa al siguiente nivel. Estamos listos para el despegue.</p>
-                     <div class="d-flex gap-3">
-                        <a href="https://wa.me/5491127000116" class="btn-neon px-5 py-3">
-                            <i class="fab fa-whatsapp me-2"></i> INICIAR CHAT
-                        </a>
-                     </div>
+                     <h2 class="display-3 fw-bold mb-4">INICIA LA <span class="text-neon">CONEXIÓN</span></h2>
+                     <p class="lead text-grey mb-5">Tu transformación digital está a un clic de distancia.</p>
+                     <a href="https://wa.me/5491127000116" class="btn-neon px-5 py-3"><i class="fab fa-whatsapp me-2"></i> CONECTAR AHORA</a>
                 </div>
                 <div class="col-lg-6 mt-5 mt-lg-0 text-center">
-                    <div class="d-inline-block p-4 rounded-4" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="d-inline-block p-4 rounded-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://jprdigital.com.ar&color=00d4ff&bgcolor=050505" alt="QR" width="180">
-                        <p class="mt-3 text-neon small fw-bold ls-2">ESCANEAR</p>
                     </div>
                 </div>
             </div>
@@ -210,12 +182,12 @@
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.globe.min.js"></script>
 
     <script>
-        // 1. CONFIGURACIÓN GLOBO (Ajustada para definir continentes)
+        // 1. CONFIGURACIÓN "MAPA MUNDI REAL"
+        // Para que se vean los continentes, aumentamos 'points' (cantidad) y ajustamos 'spacing'.
         VANTA.GLOBE({
             el: "#vanta-canvas",
             mouseControls: true,
@@ -225,39 +197,38 @@
             minWidth: 200.00,
             scale: 1.00,
             scaleMobile: 1.00,
-            color: 0x0070f3,       /* Puntos (Tierra) */
-            color2: 0x00d4ff,      /* Líneas de conexión */
-            backgroundColor: 0x050505, /* Fondo Negro */
-            size: 1.1,             
-            /* AJUSTE CLAVE PARA DEFINICIÓN DE PAÍSES: */
-            points: 13.0,          /* Cantidad de puntos (suficiente para forma, no demasiado para caos) */
-            spacing: 13.0,         /* Menor espaciado = más detalle en los continentes */
-            showDots: true,
-            showLines: true
+            color: 0x0070f3,       /* Puntos Azules */
+            color2: 0x00d4ff,      /* Líneas Cian */
+            backgroundColor: 0x050505,
+            size: 1.2,
+            
+            /* AJUSTES CLAVE PARA CONTINENTES VISIBLES: */
+            points: 20.0,    /* Máxima densidad de puntos posible para definir bien los países */
+            spacing: 14.0,   /* Menor espaciado = Más resolución en el mapa */
+            showDots: true
         });
 
-        // 2. MÁQUINA DE ESCRIBIR
-        const textElement = document.getElementById('typing-text');
-        const phrases = ["REDES NEURONALES.", "WEB DE ALTO RENDIMIENTO.", "EXPANSIÓN GLOBAL."];
-        let phraseIndex = 0; let charIndex = 0; let isDeleting = false;
-        function type() {
-            const currentPhrase = phrases[phraseIndex];
-            if (isDeleting) { textElement.textContent = currentPhrase.substring(0, charIndex - 1); charIndex--; } 
-            else { textElement.textContent = currentPhrase.substring(0, charIndex + 1); charIndex++; }
-            if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; setTimeout(type, 2000); } 
-            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; setTimeout(type, 500); } 
-            else { setTimeout(type, isDeleting ? 40 : 100); }
-        }
-        document.addEventListener('DOMContentLoaded', type);
-
-        // 3. SCROLL FADE
+        // 2. SCROLL FADE
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 entry.target.classList.toggle('in-view', entry.isIntersecting);
             });
         }, { threshold: 0.1, rootMargin: "-50px" });
-
         document.querySelectorAll('.scroll-block').forEach(el => observer.observe(el));
+
+        // 3. MÁQUINA DE ESCRIBIR
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["INTELIGENCIA ARTIFICIAL.", "DESARROLLO WEB.", "AUTOMATIZACIÓN."];
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+        function type() {
+            const current = phrases[phraseIndex];
+            if (isDeleting) { textElement.textContent = current.substring(0, charIndex - 1); charIndex--; } 
+            else { textElement.textContent = current.substring(0, charIndex + 1); charIndex++; }
+            if (!isDeleting && charIndex === current.length) { isDeleting = true; setTimeout(type, 2000); } 
+            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; setTimeout(type, 500); } 
+            else { setTimeout(type, isDeleting ? 40 : 100); }
+        }
+        document.addEventListener('DOMContentLoaded', type);
     </script>
 </body>
 </html>
